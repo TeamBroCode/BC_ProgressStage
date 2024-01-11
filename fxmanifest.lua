@@ -9,8 +9,8 @@ lua54 "yes"
 ui_page "web/build/index.html"
 
 client_scripts {
-	"client.lua",
-	"config.lua"
+	"config.lua",
+	"client.lua"
 }
 
 files {
