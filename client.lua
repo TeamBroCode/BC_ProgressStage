@@ -39,9 +39,9 @@ local Action = {
     },
     dialogues = {},
     icon = {
-        name = '',
-        iconColor = '',
-        ringColor = '',
+        name = nil,
+        iconColor = nil,
+        ringColor = nil,
         invimg = ''
     },
 }
@@ -264,11 +264,14 @@ local function ActionStart()
 end
 
 local function Process(action, start, tick, finish)
+    local img = nil
     ActionStart()
     Action = action
-    local img = nil
     if #Action.dialogues == 0 then
         print('^1Incorrect sequence / Dialogues missing^7')
+        return
+    elseif #Action.dialogues > 5 then
+        print('^1Too many dialogues / Max: 5^7')
         return
     end
     if Action.icon.invimg then
@@ -283,8 +286,7 @@ local function Process(action, start, tick, finish)
                 elseif Config.Inventory and GetResourceState(Config.Inventory):match("start") then
                     img = Config.InventoryImgLink
                 else
-                    print(
-                    "^1 Error: Unable to determine inventory resource state. Configure it in client.lua (line: 260) ^7")
+                    print("^1 Error: Unable to determine inventory resource state. Configure it in client.lua (line: 260) ^7")
                 end
                 if not string.find(QBCore.Shared.Items[tostring(Action.icon.invimg)].image, "http") then        -- 👀 Slipped in support for custom html links too
                     if not string.find(QBCore.Shared.Items[tostring(Action.icon.invimg)].image, "images/") then --search for if the icon images have /images in the listing
@@ -306,14 +308,14 @@ local function Process(action, start, tick, finish)
                 timer = math.floor(Action.duration / 1000),
                 icon = tostring(Action.icon.name or Config.Default.icon),
                 imglink = tostring(Action.icon.invimg or ''),
-                iconColor = tostring(Action.icon.iconColor or Config.Default.iconColor),
-                ringColor = tostring(Action.icon.ringColor or Config.Default.ringColor),
+                iconColor = tostring((Action.icon.iconColor ~= '' or not Action.icon.iconColor) and Action.icon.iconColor or Config.Default.iconColor),
+                ringColor = tostring((Action.icon.ringColor ~= '' or not Action.icon.ringColor) and Action.icon.ringColor or Config.Default.ringColor),
                 circles = tonumber(#Action.dialogues),
-                message1 = tostring(Action.dialogues[1] or ""),
-                message2 = tostring(Action.dialogues[2] or ""),
-                message3 = tostring(Action.dialogues[3] or ""),
-                message4 = tostring(Action.dialogues[4] or ""),
-                message5 = tostring(Action.dialogues[5] or ""),
+                message1 = tostring(Action.dialogues[1] or ''),
+                message2 = tostring(Action.dialogues[2] or ''),
+                message3 = tostring(Action.dialogues[3] or ''),
+                message4 = tostring(Action.dialogues[4] or ''),
+                message5 = tostring(Action.dialogues[5] or ''),
             })
             toggleNuiFrame(true)
             CreateThread(function()
