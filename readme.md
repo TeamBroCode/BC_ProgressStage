@@ -169,3 +169,7 @@ You can use any Font Awesome icon you want. Just make sure to use the correct na
 ## Support
 
 If you need any help, feel free to join my [Discord Server](https://discord.gg/brocode) and create a ticket in the support channel.
+
+## License
+
+This project is licensed under the [GPL-3.0 License](LICENSE).
